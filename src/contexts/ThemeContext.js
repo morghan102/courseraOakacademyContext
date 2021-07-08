@@ -4,7 +4,7 @@ export const ThemeContext = createContext();
 
 class ThemeContextProvider extends React.Component {
     state = {
-        isDarkTheme: true,
+        isDarkTheme: false,
         lightTheme: {
             color: '222',
             backgroundColor: '#d8ddf1'
@@ -17,8 +17,8 @@ class ThemeContextProvider extends React.Component {
 
     render() {
         return (
-            <ThemeContext.Provider>
-                
+            <ThemeContext.Provider value={{...this.state}}>
+                {this.props.children}
             </ThemeContext.Provider>
         );
     }

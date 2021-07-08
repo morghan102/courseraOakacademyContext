@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
+import { ThemeContext } from '../contexts/ThemeContext';
+
 
 class Navbar extends Component {
+    static contextType = ThemeContext;
     render() {
+        const { isDarkTheme, darkTheme, lightTheme } = this.context;
+
+        const theme = isDarkTheme ? darkTheme : lightTheme;
+
         const { headerContainer, headerText, headerTab, headerTabContainer } = styles;
         return (
-            <View style={headerContainer}>
-                <Text style={headerText}>OakAcademy</Text>
+            <View style={[headerContainer, theme]}>
+                <Text style={[headerText, theme]}>OakAcademy</Text>
                 <View style={headerTabContainer}>
                     <Text style={headerTab}>Overview</Text>
                     <Text style={headerTab}>Contact</Text>
