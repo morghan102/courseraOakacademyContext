@@ -4,7 +4,7 @@ import { StyleSheet, View, Text } from 'react-native';
 
 class TodoList extends Component {
     render() {
-        const { headerContainer, headerText, headerTab, headerTabContainer } = styles;
+        const { todoContainer, item } = styles;
         return (
             <View style={todoContainer}>
                 <Text style={item}>Plan</Text>
@@ -15,6 +15,17 @@ class TodoList extends Component {
     }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    todoContainer: {
+        backgroundColor: 'dimgrey',
+        alignItems: 'center',
+        justifyContent: 'space-around'
+    },
+    item: {
+        color: 'white',
+        fontSize: 18,
+        paddingVertical: 10
+    }
+});
 
 export default TodoList;
