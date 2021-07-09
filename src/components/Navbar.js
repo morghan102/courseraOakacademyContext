@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 import { ThemeContext } from '../contexts/ThemeContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 
 class Navbar extends Component {
@@ -9,22 +10,31 @@ class Navbar extends Component {
 
         const { headerContainer, headerText, headerTab, headerTabContainer } = styles;
         return (
-            <ThemeContext.Consumer>{(context) => {
-                const { isDarkTheme, darkTheme, lightTheme } = context;
-                const theme = isDarkTheme ? darkTheme : lightTheme;
-
+            <AuthContext.Consumer>{(authContext) => {
                 return (
-                    <View style={[headerContainer, theme]}>
-                        <Text style={[headerText, theme]}>OakAcademy</Text>
-                        <View style={headerTabContainer}>
-                            <Text style={headerTab}>Overview</Text>
-                            <Text style={headerTab}>Contact</Text>
-                            <Text style={headerTab}>Support</Text>
-                        </View>
-                    </View>
+                    <ThemeContext.Consumer>{(themeContext) => {
+                        const { isDarkTheme, darkTheme, lightTheme } = themeContext;
+                        const { isLoggedIn, changeAuthStatus } = authContext;
+                        const theme = isDarkTheme ? darkTheme : lightTheme;
+
+                        return (
+                            <View style={[headerContainer, theme]}>
+                                <Text style={[headerText, theme]}>OakAcademy</Text>
+                                <TouchableOpacity onPress={changeAuthStatus}>
+                                    <Text style={[headerText, theme]}>{isLoggedIn ? 'Logged In' : 'Logged Out'}</Text>
+                                </TouchableOpacity>
+                                <View style={headerTabContainer}>
+                                    <Text style={headerTab}>Overview</Text>
+                                    <Text style={headerTab}>Contact</Text>
+                                    <Text style={headerTab}>Support</Text>
+                                </View>
+                            </View>
+                        );
+                    }}
+                    </ThemeContext.Consumer>
                 );
             }}
-            </ThemeContext.Consumer>
+            </AuthContext.Consumer>
         );
     }
 }
