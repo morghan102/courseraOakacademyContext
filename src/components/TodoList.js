@@ -7,7 +7,7 @@ import { TodoListContext } from '../contexts/TodoListContext';
 const TodoList = () => {
     const [todo, setTodo] = useState('');
     const { isDarkTheme, darkTheme, lightTheme, changeTheme } = useContext(ThemeContext);
-    const { todos, addTodo, removeTodo } = useContext(TodoListContext);
+    const { todos, dispatch } = useContext(TodoListContext);
 
     const theme = isDarkTheme ? darkTheme : lightTheme;
     const { todoContainer, listItem, buttonContainer, buttonText, input } = styles;
@@ -16,11 +16,11 @@ const TodoList = () => {
         setTodo(text);
     }
     const handleAddTodoPress = () => {
-        addTodo(todo);
+        dispatch({type: 'ADD_TODO', text: todo});
         setTodo('');
     }
     const handleRemoveTodo = (id) => {
-        removeTodo(id);
+        dispatch({type: 'REMOVE_TODO', id});
     }
 
     return (
