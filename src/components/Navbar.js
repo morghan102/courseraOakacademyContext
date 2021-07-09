@@ -1,42 +1,30 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 import { ThemeContext } from '../contexts/ThemeContext';
 import { AuthContext } from '../contexts/AuthContext';
 
 
-class Navbar extends Component {
-    render() {
+const Navbar = () => {
+    const { isDarkTheme, darkTheme, lightTheme } = useContext(ThemeContext);
+    const { isLoggedIn, changeAuthStatus } = useContext(AuthContext);
+    const theme = isDarkTheme ? darkTheme : lightTheme;
 
-        const { headerContainer, headerText, headerTab, headerTabContainer } = styles;
-        return (
-            <AuthContext.Consumer>{(authContext) => {
-                return (
-                    <ThemeContext.Consumer>{(themeContext) => {
-                        const { isDarkTheme, darkTheme, lightTheme } = themeContext;
-                        const { isLoggedIn, changeAuthStatus } = authContext;
-                        const theme = isDarkTheme ? darkTheme : lightTheme;
+    const { headerContainer, headerText, headerTab, headerTabContainer } = styles;
 
-                        return (
-                            <View style={[headerContainer, theme]}>
-                                <Text style={[headerText, theme]}>OakAcademy</Text>
-                                <TouchableOpacity onPress={changeAuthStatus}>
-                                    <Text style={[headerText, theme]}>{isLoggedIn ? 'Logged In' : 'Logged Out'}</Text>
-                                </TouchableOpacity>
-                                <View style={headerTabContainer}>
-                                    <Text style={headerTab}>Overview</Text>
-                                    <Text style={headerTab}>Contact</Text>
-                                    <Text style={headerTab}>Support</Text>
-                                </View>
-                            </View>
-                        );
-                    }}
-                    </ThemeContext.Consumer>
-                );
-            }}
-            </AuthContext.Consumer>
-        );
-    }
+    return (
+        <View style={[headerContainer, theme]}>
+            <Text style={[headerText, theme]}>OakAcademy</Text>
+            <TouchableOpacity onPress={changeAuthStatus}>
+                <Text style={[headerText, theme]}>{isLoggedIn ? 'Logged In' : 'Logged Out'}</Text>
+            </TouchableOpacity>
+            <View style={headerTabContainer}>
+                <Text style={headerTab}>Overview</Text>
+                <Text style={headerTab}>Contact</Text>
+                <Text style={headerTab}>Support</Text>
+            </View>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
